@@ -20,6 +20,7 @@ class Router {
         // observing active game
 
         // challenge player
+        router.get('/users', this.get.bind(this));
 
         // game
 
@@ -27,21 +28,23 @@ class Router {
 
         // profile
 
-        router.get('/users', this.get.bind(this));
 
         return router;
     }
 
     get(req, res) {
-        console.log('getting: ')
-        return this.service.listPlayers
+        console.log('getting: users')
+        return this.service.listPlayers()
         .then((users) => res.json(users))
         .catch(err => res.status(500).json(err)) 
     }
 
     post(req, res) {
-        console.log('getting: ')
-        return this.service.listPlayers
+        console.log('posting: users')
+        return this.service.signUp(req.body)
+        .then(() => {
+            this.service.listPlayers()
+        })
         .then((users) => res.json(users))
         .catch(err => res.status(500).json(err)) 
     }

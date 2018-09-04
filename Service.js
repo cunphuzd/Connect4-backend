@@ -4,11 +4,11 @@ class Service {
     }
 
     // sign up
-    signUp(handle, password) {
+    signUp(user) {
         return this.knex
         .insert({
-            handle: handle,
-            password: password,
+            handle: user.handle,
+            password: user.password,
             logged_in: true,
             games_played: 0,
             games_won: 0,
@@ -37,7 +37,7 @@ class Service {
         })
     }
 
-    // observe games page
+    // active games page
     listGames() {
         return this.knex
         .select('id', 'user_id_1', 'user_id_2')
@@ -46,7 +46,7 @@ class Service {
         .orderBy('id', 'asc')
     }
 
-    // observe active game
+    // observing active game
     updateGameBoard(games) {
         return this.knex
         .select('id', 'user_id', 'col')
@@ -61,7 +61,7 @@ class Service {
         .select('handle')
         .from('users')
         .where('logged_in', true)
-        .whereNot("id", /*req.auth.id = userId = users[0].id*/)
+        // .whereNot("id", /*req.auth.id = userId = users[0].id*/)
     }
 
     // game
