@@ -82,6 +82,22 @@ class UsersService {
             score: update.score
         })
     }
+
+    // profile
+    displayHistory(userId) {
+        return this.knex
+        .select('player1', 'player2', 'winner', 'loser')
+        .from('games')
+        .where('active', false)
+        .where('player1', userId)
+        .orWhere('player2', userId)
+        // .where('active', false)
+        // .where(() => {
+        //     this.where('user_id_1', userId)
+        //     .orWhere('user_id_2', userId)
+        // })
+        .orderBy('id', 'desc')
+    }
 }
 
 module.exports = UsersService;

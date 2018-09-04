@@ -29,6 +29,9 @@ class UsersRouter {
         // update user stats
         router.put('/users/:id', this.updateUserStats.bind(this));
 
+        // update user stats
+        router.get('/users/history/:id', this.displayHistory.bind(this));
+
         return router;
     }
 
@@ -88,6 +91,13 @@ class UsersRouter {
         return this.usersService.updateUserStats(req.params.id, req.body)
         .then((users) => res.json(users))
         .catch(err => res.status(500).json(err)) 
+    }
+
+    displayHistory(req, res) {
+        console.log('profile')
+        return this.usersService.displayHistory(req.params.id)
+        .then((users) => res.json(users))
+        .catch(err => res.status(500).json(err))
     }
 }
 

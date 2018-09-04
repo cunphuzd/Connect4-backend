@@ -59,6 +59,15 @@ class GamesService {
         //     throw new Error(err);
         // })
     }
+
+    // scoreboard
+    displayScoreboard() {
+        return this.knex
+        .select('handle', 'score')
+        .from('users')
+        .orderBy('score', 'desc')
+        .limit(10)
+    }
 }
 
 module.exports = GamesService;

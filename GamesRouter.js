@@ -23,6 +23,9 @@ class GamesRouter {
         // declare winner
         router.put('/games', this.declareWinner.bind(this));
 
+        // scoreboard
+        router.get('/scoreboard', this.displayScoreboard.bind(this)); 
+
         return router;
     }
 
@@ -64,6 +67,13 @@ class GamesRouter {
         console.log('declare winner')
         return this.gamesService.declareWinner(req.body)
         .then((winner) => res.json(winner))
+        .catch(err => res.status(500).json(err)) 
+    }
+
+    displayScoreboard(req, res) {
+        console.log('display scoreboard')
+        return this.gamesService.displayScoreboard()
+        .then((users) => res.json(users))
         .catch(err => res.status(500).json(err)) 
     }
 }
