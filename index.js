@@ -8,6 +8,8 @@ const io = require('socket.io')(http);
 
 const UsersService = require('./UsersService');
 const UsersRouter = require('./UsersRouter');
+const GamesService = require('./GamesService');
+const GamesRouter = require('./GamesRouter');
 
 // app.use(cors());
 
@@ -37,9 +39,13 @@ const UsersRouter = require('./UsersRouter');
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 
-let userService = new UsersService(knex);
+let usersService = new UsersService(knex);
 
-app.use('/api', (new UsersRouter(userService).router()))
+app.use('/api', (new UsersRouter(usersService).router()))
+
+let gamesService = new GamesService(knex);
+
+app.use('/api', (new GamesRouter(gamesService).router()))
 
 // app.use(new Router());
 

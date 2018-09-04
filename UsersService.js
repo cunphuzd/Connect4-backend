@@ -10,6 +10,7 @@ class UsersService {
             handle: user.handle,
             password: user.password,
             logged_in: true,
+            in_game: false,
             games_played: 0,
             games_won: 0,
             games_lost: 0,
@@ -28,6 +29,7 @@ class UsersService {
         .where('password', user.password)
         .update({
             logged_in: true,
+            in_game: false,
         })
     }
 
@@ -39,16 +41,44 @@ class UsersService {
         // .where('password', user.password)
         .update({
             logged_in: false,
+            in_game: false,
         })
     }
 
     // challenge player screen
-    listPlayers() {
+    listPlayers(userId) {
         return this.knex
         .select('handle')
         .from('users')
         .where('logged_in', true)
-        // .whereNot("id", /*req.auth.id = userId = users[0].id*/)
+        .where('in_game', false)
+        .whereNot("id", userId)
+    }
+
+    // change in_game user stat
+    gameStart(userId) {
+        return this.knex('users')
+        .where('id', userId)
+        .update('in_game', true)
+    }
+
+    // change in_game user stat
+    gameEnd(userId) {
+        return this.knex('users')
+        .where('id', userId)
+        .update('in_game', false)
+    }
+
+    // can we combine this with declareWinner in GameServices?
+    // how do we update these stats?????????????????????????????????????????????????????????????????? 
+    updateUserStats(update) {
+        return this.knex('users')
+        .where("id", update.userId) // ???
+        .update({
+            games_played: update.g_p,
+            games_won: update.g_w,
+            games_lost: update.g_l,
+        })
     }
 }
 

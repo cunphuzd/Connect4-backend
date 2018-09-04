@@ -5,6 +5,7 @@ exports.up = function (knex, Promise) {
         table.string('handle');
         table.string('password');
         table.boolean('logged_in');
+        table.boolean('in_game');
         table.integer('games_played').unsigned();
         table.integer('games_won').unsigned();
         table.integer('games_lost').unsigned();
