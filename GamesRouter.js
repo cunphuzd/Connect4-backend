@@ -8,17 +8,17 @@ class GamesRouter {
     router() {
         const router = new express.Router();
 
-        // sign up
+        // list games
         router.get('/games', this.listGames.bind(this)); // WHAT DOES THIS.POST.BIND(THIS) DO????
 
         // observing active game
-        router.get('/games', this.updateGameBoard.bind(this));
+        router.get('/games/moves/:id', this.updateGameBoard.bind(this));
 
         // start game
         router.post('/games', this.startGame.bind(this));
 
         // add token
-        router.post('/moves', this.addToken.bind(this));
+        router.post('/games/moves', this.addToken.bind(this));
 
         // declare winner
         router.put('/games', this.declareWinner.bind(this));
@@ -35,7 +35,7 @@ class GamesRouter {
 
     updateGameBoard(req, res) {
         console.log('update game board')
-        return this.gamesService.updateGameBoard(req.query.game_id)
+        return this.gamesService.updateGameBoard(req.params.id)
         // .then(() => {
         //     this.gamesService.listPlayers()
         // })

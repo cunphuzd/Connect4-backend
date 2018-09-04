@@ -18,7 +18,6 @@ class GamesService {
         .select('id', 'user_id', 'col')
         .from('moves')
         .where('game_id', gameId)
-        .orderBy('id', 'desc')
     }
 
     // playing game

@@ -53,16 +53,17 @@ class UsersService {
         .where('logged_in', true)
         .where('in_game', false)
         .whereNot("id", userId)
+        .orderBy('id', 'asc')
     }
 
-    // change in_game user stat
+    // change in_game to true
     gameStart(userId) {
         return this.knex('users')
         .where('id', userId)
         .update('in_game', true)
     }
 
-    // change in_game user stat
+    // change in_game to false
     gameEnd(userId) {
         return this.knex('users')
         .where('id', userId)
@@ -71,13 +72,14 @@ class UsersService {
 
     // can we combine this with declareWinner in GameServices?
     // how do we update these stats?????????????????????????????????????????????????????????????????? 
-    updateUserStats(update) {
+    updateUserStats(userId, update) {
         return this.knex('users')
-        .where("id", update.userId) // ???
+        .where("id", userId) // ???
         .update({
             games_played: update.g_p,
             games_won: update.g_w,
             games_lost: update.g_l,
+            score: update.score
         })
     }
 }

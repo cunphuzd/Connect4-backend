@@ -18,16 +18,16 @@ class UsersRouter {
         router.put('/users/logout', this.logOut.bind(this));
 
         // challenge player
-        router.get('/users', this.listPlayers.bind(this));
+        router.get('/users/:id', this.listPlayers.bind(this));
 
         // change in_game to true
-        router.put('/users', this.gameStart.bind(this));
+        router.put('/users/gamestart/:id', this.gameStart.bind(this));
 
         // change in_game to false
-        router.put('/users', this.gameEnd.bind(this));
+        router.put('/users/gameend/:id', this.gameEnd.bind(this));
 
         // update user stats
-        router.put('/users', this.updateUserStats.bind(this));
+        router.put('/users/:id', this.updateUserStats.bind(this));
 
         return router;
     }
@@ -64,28 +64,28 @@ class UsersRouter {
 
     listPlayers(req, res) {
         console.log('getting users')
-        return this.usersService.listPlayers(req.query.user_id)
+        return this.usersService.listPlayers(req.params.id)
         .then((users) => res.json(users))
         .catch(err => res.status(500).json(err)) 
     }
 
     gameStart(req, res) {
         console.log('change in_game to true')
-        return this.usersService.gameStart(req.body)
+        return this.usersService.gameStart(req.params.id)
         .then((users) => res.json(users))
         .catch(err => res.status(500).json(err)) 
     }
 
     gameEnd(req, res) {
         console.log('change in_game to false')
-        return this.usersService.gameEnd(req.body)
+        return this.usersService.gameEnd(req.params.id)
         .then((users) => res.json(users))
         .catch(err => res.status(500).json(err)) 
     }
 
     updateUserStats(req, res) {
         console.log('update user stats')
-        return this.usersService.updateUserStats(req.body)
+        return this.usersService.updateUserStats(req.params.id, req.body)
         .then((users) => res.json(users))
         .catch(err => res.status(500).json(err)) 
     }
