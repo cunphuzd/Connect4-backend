@@ -6,8 +6,8 @@ const knex = require('./knex');
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
-const Service = require('./Service');
-const Router = require('./Router');
+const UsersService = require('./UsersService');
+const UsersRouter = require('./UsersRouter');
 
 // app.use(cors());
 
@@ -37,9 +37,9 @@ const Router = require('./Router');
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 
-let service = new Service(knex);
+let userService = new UsersService(knex);
 
-app.use('/api', (new Router(service).router()))
+app.use('/api', (new UsersRouter(userService).router()))
 
 // app.use(new Router());
 
@@ -66,8 +66,3 @@ app.use('/api', (new Router(service).router()))
 http.listen(3030, () => {
     console.log('listening on port 3030');
 });
-
-
-// app.listen(8080, () => {
-//     console.log('listening on port 8080');
-// })
