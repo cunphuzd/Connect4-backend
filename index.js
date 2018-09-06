@@ -24,16 +24,20 @@ let gamesService = new GamesService(knex);
 
 app.use('/api', (new GamesRouter(gamesService).router()))
 
-// io.on('connect', (socket) => {
-//     console.log('a user connected to the socket');
+io.on('connect', (socket) => {
+    console.log('a user connected to the socket');
 
-//     socket.on('disconnect', () => console.log('a user left us'));
+    socket.on('disconnect', () => console.log('a user left us'));
 
-//     socket.on('add-token', (c) => {
-//         console.log(c);
-//         io.emit('add-token', c)
-//     });
-// });
+    socket.on('add-token', (c) => {
+        console.log(c);
+        io.emit('add-token', c)
+    });
+
+    socket.on('winner', (turn) => {
+        io.emit('winner', turn)
+    });
+});
 
 // http.listen(3030);
 http.listen(3030, () => {

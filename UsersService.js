@@ -17,6 +17,7 @@ class UsersService {
             score: 0,
         })
         .into('users')
+        .returning('id')
         .catch(err => {
             throw new Error(err);
         })
@@ -92,7 +93,7 @@ class UsersService {
         .where('player1', userId)
         .orWhere('player2', userId)
         // .where('active', false)
-        // .where(() => {
+        // .where(function() {
         //     this.where('user_id_1', userId)
         //     .orWhere('user_id_2', userId)
         // })
